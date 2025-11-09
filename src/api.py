@@ -78,3 +78,11 @@ def predict(inp: PredictIn):
         raise HTTPException(status_code=400, detail=str(e))
     names = [CLASS_MAP[i] for i in ids]
     return {"pred": ids, "name": names}
+
+@app.get("/")
+def root():
+    return {
+        "service": "Gene Classifier API",
+        "endpoints": ["/status", "/predict", "/docs"],
+        "message": "Welcome to the Gene Classification API!"
+    }
