@@ -1,0 +1,117 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Gene Classifier (Flask UI + FastAPI backend)</title>
+<style>
+  :root{--b:#2563eb;--g:#16a34a;--r:#dc2626;--y:#ca8a04;--p:#7c3aed;--c:#0891b2;--t:#4b5563}
+  body{font-family:system-ui,Segoe UI,Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 12px}
+  h2{margin:8px 0 16px}
+  textarea{width:100%;height:180px}
+  button{padding:8px 14px;border:1px solid #ccc;border-radius:8px;cursor:pointer;background:#fff}
+  button.primary{border-color:#2563eb;background:#2563eb;color:#fff}
+  .row{display:flex;gap:10px;align-items:center;margin:10px 0}
+  table{border-collapse:collapse;width:100%;margin-top:16px}
+  th,td{border:1px solid #e5e7eb;padding:8px;text-align:left}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;color:#fff}
+  .c0{background:var(--b)} .c1{background:var(--g)} .c2{background:var(--y)}
+  .c3{background:var(--p)} .c4{background:var(--c)} .c5{background:var(--r)}
+  .c6{background:var(--t)}
+</style>
+
+<h2>Gene Classifier</h2>
+
+<form id="form" method="POST" action="/predict">
+  <div class="row">
+    <input type="file" id="file" accept=".txt,.fa,.fasta,.csv">
+    <button type="button" id="loadFile">Load file → box</button>
+    <button type="button" id="clear">Clear</button>
+  </div>
+  <textarea name="sequences" id="seqs" placeholder="Enter DNA sequences (A/C/G/T), one per line"></textarea>
+  <div class="row">
+    <button type="submit" class="primary">Predict</button>
+    <button type="button" id="downloadCsv">Download CSV</button>
+  </div>
+</form>
+
+<table id="tbl" style="display:none">
+  <thead>
+    <tr><th>#</th><th>Sequence</th><th>Class ID</th><th>Class Name</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  // Class colors + names (must match backend labels)
+  const CLASS_NAMES = {
+    0:"G protein coupled receptors",
+    1:"Tyrosine kinase",
+    2:"Tyrosine phosphatase",
+    3:"Synthetase",
+    4:"Synthase",
+    5:"Ion channel",
+    6:"Transcription factor"
+  };
+
+  const form = document.getElementById("form");
+  const seqs = document.getElementById("seqs");
+  const file = document.getElementById("file");
+  const loadBtn = document.getElementById("loadFile");
+  const clearBtn = document.getElementById("clear");
+  const tbl = document.getElementById("tbl");
+  const tbody = tbl.querySelector("tbody");
+  let lastResult = null;  // for CSV export
+
+  // Load file into textarea. Supports plain list or FASTA (">" headers are skipped)
+  loadBtn.onclick = () => {
+    const f = file.files?.[0];
+    if (!f) { alert("Choose a text/FASTA file first."); return; }
+    const r = new FileReader();
+    r.onload = () => {
+      const lines = String(r.result).split(/\r?\n/);
+      const seqLines = lines
+        .filter(l => !l.trim().startsWith(">"))        // drop FASTA headers
+        .map(l => l.trim().toUpperCase().replace(/[^ACGT]/g,"")) // keep A/C/G/T
+        .filter(Boolean);
+      seqs.value = seqLines.join("\n");
+    };
+    r.readAsText(f);
+  };
+
+  clearBtn.onclick = () => { seqs.value = ""; tbl.style.display="none"; tbody.innerHTML=""; lastResult=null; };
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const rows = seqs.value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+    if (!rows.length) { alert("Enter at least one sequence."); return; }
+    const body = new FormData(form);
+    const resp = await fetch("/predict", { method:"POST", body });
+    if (!resp.ok) { alert("Error: " + await resp.text()); return; }
+    const d = await resp.json();  // {pred:[], name:[]}
+    lastResult = rows.map((s,i)=>({i:i+1, seq:s, id:d.pred[i], name:d.name[i]}));
+
+    // render table with colored badges
+    tbody.innerHTML = "";
+    lastResult.forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.i}</td>
+        <td><code>${r.seq}</code></td>
+        <td><span class="badge c${r.id}">${r.id}</span></td>
+        <td>${r.name}</td>`;
+      tbody.appendChild(tr);
+    });
+    tbl.style.display = "";
+  };
+
+  // Download current table as CSV
+  document.getElementById("downloadCsv").onclick = () => {
+    if (!lastResult) { alert("Run Predict first."); return; }
+    const header = "index,sequence,class_id,class_name";
+    const lines = lastResult.map(r => `${r.i},${r.seq},${r.id},"${r.name}"`);
+    const csv = [header, ...lines].join("\n");
+    const blob = new Blob([csv], {type:"text/csv"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "predictions.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+</script>
