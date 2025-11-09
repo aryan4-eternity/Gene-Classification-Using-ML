@@ -1,5 +1,3 @@
-Here’s clean, well-formatted content you can copy-paste directly into your `README.md`:
-
 ---
 
 # 🧬 Gene Data Classification using Machine Learning
