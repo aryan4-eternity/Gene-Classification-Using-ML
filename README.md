@@ -32,8 +32,9 @@ gene-classification/
 │   ├── model.joblib
 │   └── metadata.json
 │
-├── frontend_app.py             # Flask UI for interactive predictions
-├── requirements.txt            # Python dependencies
+├── eda_visualizations.py     # EDA plots
+├── frontend_app.py           # Flask UI for interactive predictions
+├── requirements.txt          # Python dependencies
 ├── .gitignore
 └── README.md
 ```
@@ -84,6 +85,24 @@ pip install -r requirements.txt
 
 ---
 
+## 📊 Exploratory Data Analysis (EDA)
+
+Generate visualizations for human vs chimp gene data analysis:
+
+```bash
+python eda_visualizations.py
+```
+
+**Generates 5 plots in `plots/` folder:**
+1. **Human vs Chimp Count** - Sequence distribution
+2. **Gene Classes** - Class distribution by organism
+3. **Sequence Length** - Length comparison histogram
+4. **GC Content** - GC% distribution
+5. **GC vs Length** - Scatter plot showing relationship
+
+These plots help understand sequence features and organism differences.
+
+---
 ## 🌐 Running the App
 
 ### 🧩 Start FastAPI Backend
@@ -134,8 +153,16 @@ CCTGATAGCGTCTTAGGCTA
 
 ## 🧑‍💻 Contributors
 
-| Name             | Institution                          | USN         | Department            |
-| ----------------- | ------------------------------------- | ----------- | ---------------------- |
-| Aryan Sahu        | Bangalore Institute of Technology     | 1BI23CD005  | CSE (Data Science)     |
-| Ashwini Kulkarni  | Bangalore Institute of Technology     | 1BI23CD006  | CSE (Data Science)     |
-| Deeksha RS        | Bangalore Institute of Technology     | 1BI23CD015  | CSE (Data Science)     |
+**Aryan Sahu** — Bangalore Institute of Technology
+USN: 1BI23CD005
+Dept: CSE (Data Science)
+
+**Deeksha RS** — Bangalore Institute of Technology
+USN: 1BI23CD015
+Dept: CSE (Data Science)
+
+**Ashwini K** — Bangalore Institute of Technology
+USN: 1BI23CD006
+Dept: CSE (Data Science)
+---
+
