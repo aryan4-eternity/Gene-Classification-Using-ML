@@ -33,6 +33,7 @@ gene-classification/
 │   ├── model.joblib
 │   └── metadata.json
 │
+├── eda_visualizations.py     # EDA plots
 ├── frontend_app.py           # Flask UI for interactive predictions
 ├── requirements.txt          # Python dependencies
 ├── .gitignore
@@ -80,6 +81,24 @@ Final chosen model → **XGBoost**, validation F1-score ≈ **0.89**.
 
 ---
 
+## 📊 Exploratory Data Analysis (EDA)
+
+Generate visualizations for human vs chimp gene data analysis:
+
+```bash
+python eda_visualizations.py
+```
+
+**Generates 5 plots in `plots/` folder:**
+1. **Human vs Chimp Count** - Sequence distribution
+2. **Gene Classes** - Class distribution by organism
+3. **Sequence Length** - Length comparison histogram
+4. **GC Content** - GC% distribution
+5. **GC vs Length** - Scatter plot showing relationship
+
+These plots help understand sequence features and organism differences.
+
+---
 ## 🌐 Running the App
 
 ### 🧩 Start FastAPI Backend
@@ -132,6 +151,10 @@ CCTGATAGCGTCTTAGGCTA
 
 **Aryan Sahu** — Bangalore Institute of Technology
 USN: 1BI23CD005
+Dept: CSE (Data Science)
+
+**Deeksha RS** — Bangalore Institute of Technology
+USN: 1BI23CD015
 Dept: CSE (Data Science)
 
 ---
