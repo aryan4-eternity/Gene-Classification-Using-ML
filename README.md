@@ -32,9 +32,9 @@ gene-classification/
 │   ├── model.joblib
 │   └── metadata.json
 │
-├── eda_visualizations.py     # EDA plots
-├── frontend_app.py           # Flask UI for interactive predictions
-├── requirements.txt          # Python dependencies
+├── eda_visualizations.py       # EDA plots
+├── frontend_app.py             # Flask UI for interactive predictions
+├── requirements.txt            # Python dependencies
 ├── .gitignore
 └── README.md
 ```
@@ -72,14 +72,14 @@ pip install -r requirements.txt
 
 ## 🧠 Model Training Steps
 
-| Step | Description               | Command                                |
-| ---- | -------------------------- | --------------------------------------- |
-| 1    | Load & clean data           | `python src/step2_load_clean.py`        |
-| 2    | Split data                  | `python src/step3_split.py`             |
-| 3    | Generate K-mer features     | `python src/step4_kmer_features.py`     |
-| 4    | Train models                 | `python src/step5_train_models.py`      |
-| 5    | Evaluate test results       | `python src/step6_eval_test.py`         |
-| 6    | Package final model         | `python src/step7_pack.py`              |
+| Step | Description              | Command                              |
+| ---- | ------------------------- | -------------------------------------- |
+| 1    | Load & clean data          | `python src/step2_load_clean.py`      |
+| 2    | Split data                 | `python src/step3_split.py`           |
+| 3    | Generate K-mer features    | `python src/step4_kmer_features.py`   |
+| 4    | Train models                | `python src/step5_train_models.py`    |
+| 5    | Evaluate test results      | `python src/step6_eval_test.py`       |
+| 6    | Package final model        | `python src/step7_pack.py`            |
 
 **Final chosen model:** XGBoost — validation F1-score ≈ **0.89**
 
@@ -93,16 +93,20 @@ Generate visualizations for human vs chimp gene data analysis:
 python eda_visualizations.py
 ```
 
-**Generates 5 plots in `plots/` folder:**
-1. **Human vs Chimp Count** - Sequence distribution
-2. **Gene Classes** - Class distribution by organism
-3. **Sequence Length** - Length comparison histogram
-4. **GC Content** - GC% distribution
-5. **GC vs Length** - Scatter plot showing relationship
+**Generates 5 plots in the `plots/` folder:**
+
+| # | Plot                  | Description                              |
+| - | ---------------------- | ------------------------------------------ |
+| 1 | Human vs Chimp Count   | Sequence distribution                      |
+| 2 | Gene Classes           | Class distribution by organism             |
+| 3 | Sequence Length        | Length comparison histogram                |
+| 4 | GC Content             | GC% distribution                           |
+| 5 | GC vs Length           | Scatter plot showing relationship          |
 
 These plots help understand sequence features and organism differences.
 
 ---
+
 ## 🌐 Running the App
 
 ### 🧩 Start FastAPI Backend
@@ -135,11 +139,11 @@ CCTGATAGCGTCTTAGGCTA
 
 **Predicted Output:**
 
-| Sequence              | Class ID | Class Name            |
-| ---------------------- | -------- | ---------------------- |
-| ATGCCCACATAAATACCGTA   | 1        | Tyrosine kinase        |
-| GTTACGGAAATCTGTTGCTTC  | 6        | Transcription factor   |
-| CCTGATAGCGTCTTAGGCTA   | 4        | Synthase               |
+| Sequence               | Class ID | Class Name            |
+| ------------------------ | -------- | ------------------------ |
+| ATGCCCACATAAATACCGTA    | 1        | Tyrosine kinase          |
+| GTTACGGAAATCTGTTGCTTC   | 6        | Transcription factor     |
+| CCTGATAGCGTCTTAGGCTA    | 4        | Synthase                 |
 
 ---
 
@@ -153,16 +157,8 @@ CCTGATAGCGTCTTAGGCTA
 
 ## 🧑‍💻 Contributors
 
-**Aryan Sahu** — Bangalore Institute of Technology
-USN: 1BI23CD005
-Dept: CSE (Data Science)
-
-**Deeksha RS** — Bangalore Institute of Technology
-USN: 1BI23CD015
-Dept: CSE (Data Science)
-
-**Ashwini K** — Bangalore Institute of Technology
-USN: 1BI23CD006
-Dept: CSE (Data Science)
----
-
+| Name             | Institution                          | USN         | Department            |
+| ------------------ | -------------------------------------- | ------------- | ------------------------ |
+| Aryan Sahu        | Bangalore Institute of Technology     | 1BI23CD005  | CSE (Data Science)     |
+| Deeksha RS        | Bangalore Institute of Technology     | 1BI23CD015  | CSE (Data Science)     |
+| Ashwini K         | Bangalore Institute of Technology     | 1BI23CD006  | CSE (Data Science)     |
