@@ -157,5 +157,8 @@ Dept: CSE (Data Science)
 USN: 1BI23CD015
 Dept: CSE (Data Science)
 
+**Ashwini K** — Bangalore Institute of Technology
+USN: 1BI23CD006
+Dept: CSE (Data Science)
 ---
 
