@@ -1,17 +1,16 @@
----
-
 # 🧬 Gene Data Classification using Machine Learning
 
 An end-to-end machine learning project for classifying **gene families** based on DNA sequence data.
+
 This system predicts gene family types such as:
 
-* G-protein coupled receptors
-* Tyrosine kinase
-* Tyrosine phosphatase
-* Synthetase
-* Synthase
-* Ion channel
-* Transcription factor
+- G-protein coupled receptors
+- Tyrosine kinase
+- Tyrosine phosphatase
+- Synthetase
+- Synthase
+- Ion channel
+- Transcription factor
 
 ---
 
@@ -20,16 +19,16 @@ This system predicts gene family types such as:
 ```
 gene-classification/
 │
-├── src/                     # Backend & ML pipeline
-│   ├── step2_load_clean.py   # Load and clean DNA sequence data
-│   ├── step3_split.py        # Train/validation/test split
-│   ├── step4_kmer_features.py# Feature extraction (K-mer encoding)
-│   ├── step5_train_models.py # Model training (RF, SVM, XGB)
-│   ├── step6_eval_test.py    # Evaluation metrics
-│   ├── step7_pack.py         # Save best model and metadata
-│   └── api.py                # FastAPI app for predictions
+├── src/                        # Backend & ML pipeline
+│   ├── step2_load_clean.py     # Load and clean DNA sequence data
+│   ├── step3_split.py          # Train/validation/test split
+│   ├── step4_kmer_features.py  # Feature extraction (K-mer encoding)
+│   ├── step5_train_models.py   # Model training (RF, SVM, XGB)
+│   ├── step6_eval_test.py      # Evaluation metrics
+│   ├── step7_pack.py           # Save best model and metadata
+│   └── api.py                  # FastAPI app for predictions
 │
-├── models/                   # Trained model + metadata
+├── models/                     # Trained model + metadata
 │   ├── model.joblib
 │   └── metadata.json
 │
@@ -55,9 +54,12 @@ cd gene-classification
 
 ```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1       # Windows
-# or
-source .venv/bin/activate          # Linux / Mac
+
+# Windows
+.\.venv\Scripts\Activate.ps1
+
+# Linux / Mac
+source .venv/bin/activate
 ```
 
 ### 3️⃣ Install Dependencies
@@ -70,14 +72,16 @@ pip install -r requirements.txt
 
 ## 🧠 Model Training Steps
 
-1. **Load & clean data** → `python src/step2_load_clean.py`
-2. **Split data** → `python src/step3_split.py`
-3. **Generate K-mer features** → `python src/step4_kmer_features.py`
-4. **Train models** → `python src/step5_train_models.py`
-5. **Evaluate test results** → `python src/step6_eval_test.py`
-6. **Package final model** → `python src/step7_pack.py`
+| Step | Description               | Command                                |
+| ---- | -------------------------- | --------------------------------------- |
+| 1    | Load & clean data           | `python src/step2_load_clean.py`        |
+| 2    | Split data                  | `python src/step3_split.py`             |
+| 3    | Generate K-mer features     | `python src/step4_kmer_features.py`     |
+| 4    | Train models                 | `python src/step5_train_models.py`      |
+| 5    | Evaluate test results       | `python src/step6_eval_test.py`         |
+| 6    | Package final model         | `python src/step7_pack.py`              |
 
-Final chosen model → **XGBoost**, validation F1-score ≈ **0.89**.
+**Final chosen model:** XGBoost — validation F1-score ≈ **0.89**
 
 ---
 
@@ -107,7 +111,7 @@ These plots help understand sequence features and organism differences.
 uvicorn src.api:app --reload --port 8000
 ```
 
-Backend runs at → **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+Backend runs at → **http://127.0.0.1:8000**
 
 ### 🧭 Start Flask Frontend
 
@@ -115,7 +119,7 @@ Backend runs at → **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 python frontend_app.py
 ```
 
-Frontend runs at → **[http://127.0.0.1:5500](http://127.0.0.1:5500)**
+Frontend runs at → **http://127.0.0.1:5500**
 
 ---
 
@@ -131,19 +135,19 @@ CCTGATAGCGTCTTAGGCTA
 
 **Predicted Output:**
 
-| Sequence              | Class ID | Class Name           |
-| --------------------- | -------- | -------------------- |
-| ATGCCCACATAAATACCGTA  | 1        | Tyrosine kinase      |
-| GTTACGGAAATCTGTTGCTTC | 6        | Transcription factor |
-| CCTGATAGCGTCTTAGGCTA  | 4        | Synthase             |
+| Sequence              | Class ID | Class Name            |
+| ---------------------- | -------- | ---------------------- |
+| ATGCCCACATAAATACCGTA   | 1        | Tyrosine kinase        |
+| GTTACGGAAATCTGTTGCTTC  | 6        | Transcription factor   |
+| CCTGATAGCGTCTTAGGCTA   | 4        | Synthase               |
 
 ---
 
 ## 🧾 Notes
 
-* Built with **Python**, **scikit-learn**, **xgboost**, **FastAPI**, and **Flask**.
-* Model and metadata stored in `/models/`.
-* `.gitignore` excludes large or temporary files.
+- Built with **Python**, **scikit-learn**, **xgboost**, **FastAPI**, and **Flask**.
+- Model and metadata are stored in `/models/`.
+- `.gitignore` excludes large or temporary files.
 
 ---
 
